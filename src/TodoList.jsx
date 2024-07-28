@@ -1,6 +1,7 @@
 import List from "@mui/material/List";
 import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
+import {Box, Typography} from "@mui/material";
 
 
 import { useState, useEffect } from "react";
@@ -24,7 +25,7 @@ export default function TodoList() {
 
   const addTodo = (text) => {
     setTodos(prevTodos => {
-      return[...prevTodos, {text: text, id: 8, completed: false}];
+      return[...prevTodos, {text: text, id: crypto.randomUUID(), completed: false}];
     })
   }
 
@@ -40,6 +41,16 @@ export default function TodoList() {
   };
 
   return (
+    <Box sx={{
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+      alignItems: "center",
+      m: 3,
+    }}>
+      <Typography variant="h2" component="h1" sx={{flexGrow: 1}}>
+        Todos
+      </Typography>
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {todos.map((todo) => {
         return (
@@ -53,5 +64,6 @@ export default function TodoList() {
       })}
       <TodoForm addTodo={addTodo}/>
     </List>
+    </Box>
   );
 }
