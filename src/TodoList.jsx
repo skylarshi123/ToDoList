@@ -3,29 +3,21 @@ import TodoItem from "./TodoItem";
 import TodoForm from "./TodoForm";
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const initialTodos = [
-  {
-    id: 1,
-    text: "Todo 1",
-    completed: true,
-  },
-  {
-    id: 2,
-    text: "Todo 2",
-    completed: false,
-  },
-  {
-    id: 3,
-    text: "Todo 3",
-    completed: false,
-  },
-];
+const getInitialData = () => {
+  const data = JSON.parse(localStorage.getItem("todos"));
+  if (!data) return [];
+  return data;
+};
 
 export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState(getInitialData);
 
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
   const removeTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
